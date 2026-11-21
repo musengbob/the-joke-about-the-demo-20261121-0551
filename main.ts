@@ -4,6 +4,19 @@ import { join } from "node:path";
 const JOKE =
   "My agent's demo crashed live on stage, so it presented the stack trace as the roadmap and asked the audience for feedback.";
 
+const codePoints = [...JOKE].length;
+if (codePoints < 1 || codePoints > 280) {
+  throw new Error(
+    `Joke must be 1-280 Unicode code points, got ${codePoints}.`,
+  );
+}
+if (JOKE.trim() === "") {
+  throw new Error("Joke must not be only whitespace.");
+}
+if (JOKE.includes("\n") || JOKE.includes("\r")) {
+  throw new Error("Joke must be a single line (no newline characters).");
+}
+
 const outDir =
   process.env.MAKEFUN_OUTPUT_DIR &&
   process.env.MAKEFUN_OUTPUT_DIR.trim() !== ""
